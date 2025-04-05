@@ -1,121 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kos Purwokerto - Temukan Kos Impianmu</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function filterKos() {
-            const minPrice = parseInt(document.getElementById('minPrice').value) || 0;
-            const maxPrice = parseInt(document.getElementById('maxPrice').value) || Infinity;
-            const searchKeyword = document.getElementById('search').value.toLowerCase();
-            const cards = document.querySelectorAll('.card');
-
-            cards.forEach(card => {
-                const title = card.querySelector('h5').textContent.toLowerCase();
-                const priceText = card.querySelector('.price').textContent;
-                const price = parseInt(priceText.replace(/\D/g, ''));
-
-                if ((title.includes(searchKeyword) || searchKeyword === '') &&
-                    (price >= minPrice && price <= maxPrice)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zyulear | Penulis & Programmer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      transition: background 0.3s, color 0.3s;
+    }
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://source.unsplash.com/1600x900/?writing') center/cover no-repeat;
+      color: white;
+      padding: 120px 0;
+      text-align: center;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+    .dark-mode {
+      background-color: #121212;
+      color: #f1f1f1;
+    }
+    .dark-mode .navbar, .dark-mode .card, .dark-mode .bg-light {
+      background-color: #1e1e1e !important;
+      color: #f1f1f1 !important;
+    }
+    .portfolio-item img {
+      width: 100%;
+      border-radius: 12px;
+    }
+    .btn-dark-mode {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+  </style>
 </head>
 <body>
 
-<header class="bg-success text-white text-center py-4">
-    <h1>Kos Purwokerto</h1>
-    <p>Temukan Kos Impianmu di Purwokerto</p>
-</header>
+<!-- Toggle Dark Mode -->
+<button class="btn btn-secondary btn-sm btn-dark-mode" onclick="toggleDarkMode()">
+  <i class="bi bi-moon"></i>
+</button>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Kos Purwokerto</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="#beranda">Beranda</a></li>
-                <li class="nav-item"><a class="nav-link" href="#daftar-kos">Daftar Kos</a></li>
-                <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
-            </ul>
-        </div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand" href="#">Zyulear</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
+        <li class="nav-item"><a class="nav-link" href="#layanan">Layanan</a></li>
+        <li class="nav-item"><a class="nav-link" href="#portofolio">Portofolio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
+      </ul>
     </div>
+  </div>
 </nav>
 
-<section id="beranda" class="container my-5">
-    <h2 class="text-center">Selamat Datang di Kos Purwokerto</h2>
-    <p class="text-center">Platform yang memudahkan Anda menemukan kos yang nyaman dan sesuai budget di Purwokerto.</p>
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container" data-aos="fade-up">
+    <h1 class="display-4" data-aos="zoom-in">Halo, saya Zyulear</h1>
+    <p class="lead" data-aos="fade-up" data-aos-delay="200">Penulis | Blogger | Programmer Pemula</p>
+    <a href="#kontak" class="btn btn-primary mt-3" data-aos="fade-up" data-aos-delay="400">Hubungi Saya</a>
+  </div>
 </section>
 
-<section id="daftar-kos" class="container my-5">
-    <h2 class="text-center mb-4">Daftar Kos</h2>
-    <input type="text" id="search" class="form-control mb-3" placeholder="Cari nama kos..." oninput="filterKos()">
-    <div class="row">
-        <div class="col-md-4">
-            <input type="number" id="minPrice" class="form-control mb-3" placeholder="Harga minimum" oninput="filterKos()">
-        </div>
-        <div class="col-md-4">
-            <input type="number" id="maxPrice" class="form-control mb-3" placeholder="Harga maksimum" oninput="filterKos()">
-        </div>
+<!-- Tentang -->
+<section id="tentang" class="py-5">
+  <div class="container text-center" data-aos="fade-right">
+    <h2 data-aos="fade-up">Tentang Saya</h2>
+    <p data-aos="fade-up" data-aos-delay="100">Saya Zyulear, penulis yang sedang mendalami dunia pemrograman dan desain web. Saya mencintai kata-kata dan teknologi, dan saya ingin menggabungkan keduanya dalam karya saya.</p>
+  </div>
+</section>
+
+<!-- Layanan -->
+<section id="layanan" class="py-5 bg-light">
+  <div class="container text-center">
+    <h2 data-aos="fade-up">Layanan</h2>
+    <div class="row mt-4">
+      <div class="col-md-4" data-aos="zoom-in">
+        <i class="bi bi-pencil display-5 text-primary"></i>
+        <h5 class="mt-3">Penulisan Konten</h5>
+        <p>Artikel, blog, dan caption kreatif yang menyentuh pembaca.</p>
+      </div>
+      <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+        <i class="bi bi-code-slash display-5 text-primary"></i>
+        <h5 class="mt-3">Web Development</h5>
+        <p>Website personal, portofolio, atau landing page simpel tapi estetik.</p>
+      </div>
+      <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+        <i class="bi bi-brush display-5 text-primary"></i>
+        <h5 class="mt-3">Desain UI</h5>
+        <p>Mockup desain untuk website atau aplikasi mobile yang minimalis.</p>
+      </div>
     </div>
+  </div>
+</section>
 
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="kos1.jpg" class="card-img-top" alt="Kos Putra Harmoni">
-                <div class="card-body">
-                    <h5 class="card-title">Kos Putra Harmoni</h5>
-                    <p class="card-text">Lokasi: Jl. Jendral Soedirman No. 45</p>
-                    <p class="card-text price">Harga: Rp 500.000/bulan</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="kos2.jpg" class="card-img-top" alt="Kos Putri Sakura">
-                <div class="card-body">
-                    <h5 class="card-title">Kos Putri Sakura</h5>
-                    <p class="card-text">Lokasi: Jl. Gatot Subroto No. 30</p>
-                    <p class="card-text price">Harga: Rp 700.000/bulan</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <img src="kos3.jpg" class="card-img-top" alt="Kos Premium Elite">
-                <div class="card-body">
-                    <h5 class="card-title">Kos Premium Elite</h5>
-                    <p class="card-text">Lokasi: Jl. Merdeka No. 15</p>
-                    <p class="card-text price">Harga: Rp 1.200.000/bulan</p>
-                </div>
-            </div>
-        </div>
+<!-- Portofolio -->
+<section id="portofolio" class="py-5">
+  <div class="container text-center">
+    <h2 data-aos="fade-up">Portofolio</h2>
+    <div class="row mt-4">
+      <div class="col-md-4" data-aos="fade-up">
+        <img src="https://source.unsplash.com/400x300/?website" alt="Website Pribadi">
+        <h5 class="mt-2">Website Pribadi</h5>
+        <p>Website portofolio responsif menggunakan Bootstrap dan animasi AOS.</p>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <img src="https://source.unsplash.com/400x300/?design" alt="UI App">
+        <h5 class="mt-2">UI Aplikasi Buku</h5>
+        <p>Mockup aplikasi pencatatan buku favorit yang dibuat dengan Figma.</p>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <img src="https://source.unsplash.com/400x300/?writing" alt="Kumpulan Puisi">
+        <h5 class="mt-2">Kumpulan Puisi</h5>
+        <p>Kumpulan puisi yang bisa dibaca di blog saya: <a href="https://wordsofartbyzyulear.blogspot.com" target="_blank">WordsofArt by Zyulear</a></p>
+      </div>
     </div>
+  </div>
 </section>
 
-<section id="kontak" class="container my-5">
-    <h2 class="text-center">Hubungi Kami</h2>
-    <p class="text-center">Email: info@kospurwokerto.com | Telepon: +62 812-3456-7890</p>
-
-    <h3 class="text-center">Lokasi Kos di Purwokerto</h3>
-    <iframe 
-        class="w-100" height="300"
-        src="https://www.google.com/maps/embed/v1/view?key=AIzaSyDAjq8Ahf9uKGHk85KAjyWzKcrBk-s0CI0&center=-7.424525,109.234125&zoom=12"
-        allowfullscreen>
-    </iframe>
+<!-- Blog -->
+<section id="blog" class="py-5 bg-light">
+  <div class="container text-center">
+    <h2 data-aos="fade-up">Blog</h2>
+    <p data-aos="fade-up" data-aos-delay="100">Baca tulisan dan puisi terbaru saya di blog pribadi:</p>
+    <a href="https://wordsofartbyzyulear.blogspot.com" class="btn btn-outline-primary" target="_blank" data-aos="zoom-in" data-aos-delay="200">
+      Kunjungi Blog "WordsofArt by Zyulear"
+    </a>
+  </div>
 </section>
 
-<footer class="bg-dark text-white text-center py-3">
-    <p>&copy; 2025 Kos Purwokerto. All Rights Reserved.</p>
+<!-- Kontak -->
+<section id="kontak" class="py-5">
+  <div class="container text-center">
+    <h2 data-aos="fade-up">Kontak</h2>
+    <form class="mt-4" data-aos="zoom-in">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <input type="text" class="form-control" placeholder="Nama Anda" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <input type="email" class="form-control" placeholder="Email Anda" required>
+        </div>
+      </div>
+      <div class="mb-3">
+        <textarea class="form-control" rows="5" placeholder="Pesan Anda" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+    </form>
+  </div>
+</section>
+
+<footer class="text-center py-4 bg-dark text-white">
+  <small>© 2025 Zyulear. Dibuat dengan ❤️ oleh Zyulear menggunakan Bootstrap.</small>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+  }
+</script>
 </body>
 </html>
