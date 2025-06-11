@@ -1,181 +1,943 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en" >
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zyulear | Penulis & Programmer</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zahra's Portfolio - Dark Sparkle Theme</title>
+
+  <!-- Google Fonts: Inter -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  
+  <!-- Bootstrap 5 CSS CDN -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Google Material Icons -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+    rel="stylesheet"
+  />
+
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      transition: background 0.3s, color 0.3s;
+    /* Global Reset */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
     }
-    .hero {
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://source.unsplash.com/1600x900/?writing') center/cover no-repeat;
-      color: white;
-      padding: 120px 0;
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: "Inter", sans-serif;
+      background: #0b0c17;
+      color: #e8e8f7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;    
+      position: relative;
+      scroll-behavior: smooth;
+    }
+
+    /* Canvas background full screen */
+    #star-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      user-select: none;
+      background: radial-gradient(ellipse at center, #1a1a2e 0%, #0b0c17 100%);
+    }
+
+    /* Content container with blur glass effect and dark translucent background */
+    .content-container {
+      position: relative;
+      z-index: 10;
+      max-width: 960px;
+      margin: 3rem auto 4rem auto;
+      padding: 2.5rem 2rem;
+      background: rgba(20, 20, 35, 0.75);
+      border-radius: 20px;
+      box-shadow:
+        0 0 30px rgba(107, 99, 249, 0.4),
+        0 0 60px rgba(107, 99, 249, 0.2);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255 255 255 / 0.1);
+      color: #e8e8f7;
+    }
+
+    /* Header styles */
+    header {
+      width: 100%;
+      background: transparent;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 1rem 2rem;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255 255 255 / 0.1);
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      font-size: 1.85rem;
+      background: linear-gradient(135deg, #8b52f4, #54afff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      user-select: none;
+    }
+
+    .navbar-nav .nav-link {
+      color: #c5c7e0;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link:focus,
+    .navbar-nav .nav-link.active {
+      color: #8b52f4;
+    }
+    .navbar-nav .nav-link::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -6px;
+      left: 0;
+      background: linear-gradient(135deg, #8b52f4, #54afff);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+    .navbar-nav .nav-link:hover::after,
+    .navbar-nav .nav-link:focus::after,
+    .navbar-nav .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* Material icon style for navbar toggler */
+    .material-symbols-outlined.nav-toggler-icon {
+      font-size: 36px;
+      color: #aaaaff;
+      user-select: none;
+    }
+
+    /* Section styles */
+    section {
+      margin-bottom: 4rem;
+    }
+    section h2 {
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #8b52f4, #54afff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      user-select: none;
       text-align: center;
     }
-    .navbar-brand {
-      font-weight: bold;
-      font-size: 1.5rem;
+
+    section p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto;
+      color: #cbd1f7dd;
+      user-select: text;
+      text-align: center;
     }
-    .dark-mode {
-      background-color: #121212;
-      color: #f1f1f1;
+
+    /* Skills container flex */
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
     }
-    .dark-mode .navbar, .dark-mode .card, .dark-mode .bg-light {
-      background-color: #1e1e1e !important;
-      color: #f1f1f1 !important;
+    .skill-item {
+      background: rgba(139, 92, 246, 0.2);
+      padding: 1rem 2rem;
+      border-radius: 16px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      min-width: 140px;
+      color: #dfdbff;
+      box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      cursor: default;
+      font-size: 1.1rem;
     }
-    .portfolio-item img {
+    .skill-item:hover,
+    .skill-item:focus-within {
+      transform: scale(1.08);
+      box-shadow: 0 0 40px #8b52f4bb;
+      outline-offset: 4px;
+      outline-color: #8b52f4cc;
+      outline-style: solid;
+      outline-width: 2px;
+    }
+    .skill-item .material-symbols-outlined {
+      font-size: 32px;
+      color: #54afff;
+    }
+
+    /* Projects grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    @media (min-width: 576px) {
+      .projects-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .project-card {
+      background: rgba(93, 80, 159, 0.25);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(139, 92, 246, 0.6);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .project-card:hover,
+    .project-card:focus-visible {
+      transform: translateY(-10px);
+      box-shadow: 0 0 50px #8b52f4;
+      outline-offset: 4px;
+      outline-color: #8b52f4cc;
+      outline-style: solid;
+      outline-width: 2px;
+    }
+    .project-card img {
       width: 100%;
-      border-radius: 12px;
+      height: 170px;
+      object-fit: cover;
+      object-position: center;
+      user-select: none;
+      pointer-events: none;
     }
-    .btn-dark-mode {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 9999;
+    .project-content {
+      flex-grow: 1;
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
+    .project-title {
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: #d7d2ff;
+    }
+    .project-desc {
+      color: #c3bff9cc;
+      flex-grow: 1;
+      font-size: 0.95rem;
+    }
+
+    /* Contact section */
+    #contact ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (min-width: 576px) {
+      #contact ul {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+    #contact li {
+      background: rgba(139, 92, 246, 0.25);
+      border-radius: 20px;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 0 25px rgba(139, 92, 246, 0.6);
+      font-weight: 600;
+      color: #d7d2ff;
+      user-select: text;
+      cursor: default;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    #contact li:hover,
+    #contact li:focus-within {
+      transform: scale(1.1);
+      box-shadow: 0 0 50px #8b52f4cc;
+      outline-offset: 4px;
+      outline-color: #8b52f4cc;
+      outline-style: solid;
+      outline-width: 2px;
+    }
+    #contact a {
+      color: #e8e8f7;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    #contact a:hover,
+    #contact a:focus {
+      color: #54afff;
+      text-decoration: underline;
+      outline-offset: 2px;
+    }
+    /* Material icon in contact */
+    #contact .material-symbols-outlined {
+      font-size: 28px;
+      color: #c7baffcc;
+      user-select: none;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem 1rem 1rem;
+      color: #bbb9f5cc;
+      font-weight: 500;
+      font-size: 0.95rem;
+      user-select: none;
+    }
+
+    /* Modal styling with dark theme override */
+    .modal-content {
+      background: rgba(20, 20, 35, 0.95);
+      border-radius: 16px;
+      color: #e8e8f7;
+      border: none;
+      box-shadow: 0 0 60px #8b52f4cc;
+    }
+    .modal-header,
+    .modal-footer {
+      border: none;
+    }
+    .modal-title {
+      background: linear-gradient(135deg, #8b52f4, #54afff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #8b52f4, #54afff);
+      border: none;
+      font-weight: 700;
+      padding: 0.5rem 1.5rem;
+      box-shadow: 0 4px 12px #6f4eda;
+      user-select: none;
+    }
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background: linear-gradient(135deg, #54afff, #8b52f4);
+      box-shadow: 0 6px 24px #8b52f4;
+    }
+    .btn-outline-secondary {
+      border-color: #6f67d1;
+      color: #b0aefbdd;
+      user-select: none;
+    }
+    .btn-outline-secondary:hover,
+    .btn-outline-secondary:focus {
+      color: #fff;
+      background-color: #4d42bbcc;
+      border-color: #4d42bbcc;
+    }
+
   </style>
 </head>
 <body>
+  <canvas id="star-canvas" aria-hidden="true"></canvas>
 
-<!-- Toggle Dark Mode -->
-<button class="btn btn-secondary btn-sm btn-dark-mode" onclick="toggleDarkMode()">
-  <i class="bi bi-moon"></i>
-</button>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark container">
+      <a class="navbar-brand" href="#">Zahra</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="material-symbols-outlined nav-toggler-icon">menu</span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav gap-3">
+          <li class="nav-item"><a class="nav-link active" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="https://wordsofartbyzyulear.blogspot.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Blog</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
-  <div class="container">
-    <a class="navbar-brand" href="#">Zyulear</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
-        <li class="nav-item"><a class="nav-link" href="#layanan">Layanan</a></li>
-        <li class="nav-item"><a class="nav-link" href="#portofolio">Portofolio</a></li>
-        <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>
-        <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
+  <main class="content-container" role="main">
+    <!-- About Section -->
+    <section id="about" aria-labelledby="about-title">
+      <h2 id="about-title">About Me</h2>
+      <p>
+        Hi, I’m Zahra, a passionate student of Business Digital with strong
+        skills in writing, design (Figma), and project management. This
+        portfolio showcases my projects and abilities, highlighting creativity
+        and professionalism.
+      </p>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" aria-labelledby="skills-title">
+      <h2 id="skills-title">My Skills</h2>
+      <div class="skills-list" role="list">
+        <div class="skill-item" role="listitem" tabindex="0">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >description</span
+          >
+          Writing & Blogging
+        </div>
+        <div class="skill-item" role="listitem" tabindex="0">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >design_services</span
+          >
+          Figma Design
+        </div>
+        <div class="skill-item" role="listitem" tabindex="0">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >folder_open</span
+          >
+          Project Management
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" aria-labelledby="projects-title">
+      <h2 id="projects-title">Projects</h2>
+      <div class="projects-grid">
+        <!-- Project 1 -->
+        <div
+          class="project-card"
+          role="button"
+          tabindex="0"
+          data-bs-toggle="modal"
+          data-bs-target="#project1Modal"
+          aria-describedby="proj1-desc"
+        >
+          <img
+            src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/211a8694-645f-4f9f-b823-52a528307040.png"
+            alt="Screenshot preview of Project 1 showing a clean dashboard interface"
+            class="project-image"
+            loading="lazy"
+          />
+          <div class="project-content">
+            <h3 class="project-title">Project 1: Digital Marketing Campaign</h3>
+            <p id="proj1-desc" class="project-desc">
+              A comprehensive marketing campaign for a local startup focusing
+              on digital growth strategies.
+            </p>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div
+          class="project-card"
+          role="button"
+          tabindex="0"
+          data-bs-toggle="modal"
+          data-bs-target="#project2Modal"
+          aria-describedby="proj2-desc"
+        >
+          <img
+            src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/418fc484-5e3b-4dd6-a82d-1a674cafb92e.png"
+            alt="Preview image of Project 2 showcasing a mobile-first Figma design wireframe"
+            class="project-image"
+            loading="lazy"
+          />
+          <div class="project-content">
+            <h3 class="project-title">Project 2: Figma UI/UX Design</h3>
+            <p id="proj2-desc" class="project-desc">
+              UI/UX design project for a responsive mobile app using Figma with
+              an emphasis on usability and style.
+            </p>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div
+          class="project-card"
+          role="button"
+          tabindex="0"
+          data-bs-toggle="modal"
+          data-bs-target="#project3Modal"
+          aria-describedby="proj3-desc"
+        >
+          <img
+            src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/15abb442-ea95-4b2f-be8e-3000ce541398.png"
+            alt="Project 3 preview showing analytics and reports dashboard illustration"
+            class="project-image"
+            loading="lazy"
+          />
+          <div class="project-content">
+            <h3 class="project-title">Project 3: Business Analytics Report</h3>
+            <p id="proj3-desc" class="project-desc">
+              Data-driven business insights report created leveraging digital
+              tools for smarter decisions.
+            </p>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div
+          class="project-card"
+          role="button"
+          tabindex="0"
+          data-bs-toggle="modal"
+          data-bs-target="#project4Modal"
+          aria-describedby="proj4-desc"
+        >
+          <img
+            src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ae9b7cb0-46b5-46df-bf3a-8b699eb41f5f.png"
+            alt="Project 4 preview showing a blog content strategy outline on a digital board"
+            class="project-image"
+            loading="lazy"
+          />
+          <div class="project-content">
+            <h3 class="project-title">Project 4: Blogging & Content Strategy</h3>
+            <p id="proj4-desc" class="project-desc">
+              Content creation and strategy development for my blog
+              <a
+                href="https://wordsofartbyzyulear.blogspot.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                >wordsofartbyzyulear.blogspot.com</a
+              >.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Contact Me</h2>
+      <ul>
+        <li tabindex="0">
+          <span class="material-symbols-outlined" aria-hidden="true">email</span>
+          <a href="mailto:zyuliar27@gmail.com" aria-label="Send email to zyuliar27@gmail.com"
+            >zyuliar27@gmail.com</a
+          >
+        </li>
+        <li tabindex="0">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >instagram</span
+          >
+          <a
+            href="https://instagram.com/zyulear"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram profile @zyulear"
+            >@zyulear</a
+          >
+        </li>
+        <li tabindex="0">
+          <span class="material-symbols-outlined" aria-hidden="true">rss_feed</span>
+          <a
+            href="https://wordsofartbyzyulear.blogspot.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Blog: wordsofartbyzyulear.blogspot.com"
+            >wordsofartbyzyulear.blogspot.com</a
+          >
+        </li>
       </ul>
-    </div>
-  </div>
-</nav>
+    </section>
+  </main>
 
-<!-- Hero Section -->
-<section class="hero">
-  <div class="container" data-aos="fade-up">
-    <h1 class="display-4" data-aos="zoom-in">Halo, saya Zyulear</h1>
-    <p class="lead" data-aos="fade-up" data-aos-delay="200">Penulis | Blogger | Programmer Pemula</p>
-    <a href="#kontak" class="btn btn-primary mt-3" data-aos="fade-up" data-aos-delay="400">Hubungi Saya</a>
-  </div>
-</section>
+  <!-- Project Modals -->
 
-<!-- Tentang -->
-<section id="tentang" class="py-5">
-  <div class="container text-center" data-aos="fade-right">
-    <h2 data-aos="fade-up">Tentang Saya</h2>
-    <p data-aos="fade-up" data-aos-delay="100">Saya Zyulear, penulis yang sedang mendalami dunia pemrograman dan desain web. Saya mencintai kata-kata dan teknologi, dan saya ingin menggabungkan keduanya dalam karya saya.</p>
-  </div>
-</section>
-
-<!-- Layanan -->
-<section id="layanan" class="py-5 bg-light">
-  <div class="container text-center">
-    <h2 data-aos="fade-up">Layanan</h2>
-    <div class="row mt-4">
-      <div class="col-md-4" data-aos="zoom-in">
-        <i class="bi bi-pencil display-5 text-primary"></i>
-        <h5 class="mt-3">Penulisan Konten</h5>
-        <p>Artikel, blog, dan caption kreatif yang menyentuh pembaca.</p>
-      </div>
-      <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
-        <i class="bi bi-code-slash display-5 text-primary"></i>
-        <h5 class="mt-3">Web Development</h5>
-        <p>Website personal, portofolio, atau landing page simpel tapi estetik.</p>
-      </div>
-      <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
-        <i class="bi bi-brush display-5 text-primary"></i>
-        <h5 class="mt-3">Desain UI</h5>
-        <p>Mockup desain untuk website atau aplikasi mobile yang minimalis.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Portofolio -->
-<section id="portofolio" class="py-5">
-  <div class="container text-center">
-    <h2 data-aos="fade-up">Portofolio</h2>
-    <div class="row mt-4">
-      <div class="col-md-4" data-aos="fade-up">
-        <img src="Website Pribadi.png/400x300" alt="Website Pribadi">
-        <h5 class="mt-2">Website Pribadi</h5>
-        <p>Website portofolio responsif menggunakan Bootstrap dan animasi AOS.</p>
-      </div>
-      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-        <img src="https://i.pinimg.com/736x/f8/71/c9/f871c99d11bc560e68a64e7a55b7cc93.jpg/400x300" alt="UI App">
-        <h5 class="mt-2">UI Aplikasi Buku</h5>
-        <p>Mockup aplikasi pencatatan buku favorit yang dibuat dengan Figma.</p>
-      </div>
-      <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-        <img src="https://i.pinimg.com/736x/e3/b0/8b/e3b08ba8382261258cc0f2b4c19e6351.jpg/400x300" alt="Kumpulan Puisi">
-        <h5 class="mt-2">Kumpulan Puisi</h5>
-        <p>Kumpulan puisi yang bisa dibaca di blog saya: <a href="https://wordsofartbyzyulear.blogspot.com" target="_blank">WordsofArt by Zyulear</a></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Blog -->
-<section id="blog" class="py-5 bg-light">
-  <div class="container text-center">
-    <h2 data-aos="fade-up">Blog</h2>
-    <p data-aos="fade-up" data-aos-delay="100">Baca tulisan dan puisi terbaru saya di blog pribadi:</p>
-    <a href="https://wordsofartbyzyulear.blogspot.com" class="btn btn-outline-primary" target="_blank" data-aos="zoom-in" data-aos-delay="200">
-      Kunjungi Blog "WordsofArt by Zyulear"
-    </a>
-  </div>
-</section>
-
-<!-- Kontak -->
-<section id="kontak" class="py-5">
-  <div class="container text-center">
-    <h2 data-aos="fade-up">Kontak</h2>
-    <form class="mt-4" data-aos="zoom-in">
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <input type="text" class="form-control" placeholder="Nama Anda" required>
+  <!-- Modal template repeated for each project, dark style maintained -->
+  <!-- Project 1 Modal -->
+  <div
+    class="modal fade"
+    id="project1Modal"
+    tabindex="-1"
+    aria-labelledby="project1ModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4 shadow-sm">
+        <div class="modal-header bg-transparent">
+          <h5 class="modal-title" id="project1ModalLabel">
+            Project 1: Digital Marketing Campaign
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
-        <div class="col-md-6 mb-3">
-          <input type="email" class="form-control" placeholder="Email Anda" required>
+        <div class="modal-body text-white">
+          <img
+            src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/33a24c92-1aa1-4756-9a06-240692a4d38d.png"
+            alt="Expanded screenshot of Project 1 digital marketing dashboard"
+            class="img-fluid rounded mb-3"
+          />
+          <p>
+            This project involved designing and executing a broad digital marketing
+            strategy to boost brand awareness and acquisition for a startup
+            business. I was responsible for content planning, social media
+            management, and analytics tracking.
+          </p>
+        </div>
+        <div class="modal-footer border-0">
+          <a
+            href="#"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+            >View Project</a
+          >
+          <button
+            type="button"
+            class="btn btn-outline-light"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
         </div>
       </div>
-      <div class="mb-3">
-        <textarea class="form-control" rows="5" placeholder="Pesan Anda" required></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Kirim Pesan</button>
-    </form>
+    </div>
   </div>
-</section>
 
-<footer class="text-center py-4 bg-dark text-white">
-  <small>© 2025 Zyulear. Dibuat dengan ❤️ oleh Zyulear menggunakan Bootstrap.</small>
-</footer>
+  <!-- Project 2 Modal -->
+  <div
+    class="modal fade"
+    id="project2Modal"
+    tabindex="-1"
+    aria-labelledby="project2ModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4 shadow-sm">
+        <div class="modal-header bg-transparent">
+          <h5 class="modal-title" id="project2ModalLabel">
+            Project 2: Figma UI/UX Design
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-white">
+          <img
+            src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3b44cd04-b98c-4ecf-abb6-eac72f8f7d52.png"
+            alt="Expanded preview of mobile app Figma wireframes"
+            class="img-fluid rounded mb-3"
+          />
+          <p>
+            Created detailed wireframes and high-fidelity UI/UX designs using Figma
+            for a mobile-first responsive application. Focused on usability, user
+            flows, and modern aesthetics inspired by Figma's own design principles.
+          </p>
+        </div>
+        <div class="modal-footer border-0">
+          <a
+            href="#"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+            >View Figma File</a
+          >
+          <button
+            type="button"
+            class="btn btn-outline-light"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-  AOS.init();
-  function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
-  }
-</script>
+  <!-- Project 3 Modal -->
+  <div
+    class="modal fade"
+    id="project3Modal"
+    tabindex="-1"
+    aria-labelledby="project3ModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4 shadow-sm">
+        <div class="modal-header bg-transparent">
+          <h5 class="modal-title" id="project3ModalLabel">
+            Project 3: Business Analytics Report
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-white">
+          <img
+            src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fddf3873-00ab-42c4-9467-c9be5d98b1de.png"
+            alt="Detailed charts and analytics report screenshots"
+            class="img-fluid rounded mb-3"
+          />
+          <p>
+            Developed a comprehensive analytics report leveraging business
+            intelligence tools to provide actionable insights for strategic
+            decision-making. Emphasized data visualization and clarity.
+          </p>
+        </div>
+        <div class="modal-footer border-0">
+          <a
+            href="#"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+            >View Report</a
+          >
+          <button
+            type="button"
+            class="btn btn-outline-light"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project 4 Modal -->
+  <div
+    class="modal fade"
+    id="project4Modal"
+    tabindex="-1"
+    aria-labelledby="project4ModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4 shadow-sm">
+        <div class="modal-header bg-transparent">
+          <h5 class="modal-title" id="project4ModalLabel">
+            Blogging & Content Strategy
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-white">
+          <img
+            src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4ba82e2b-5995-42f0-a02c-b64d27bb009b.png"
+            alt="Blog content strategy outline and writing samples"
+            class="img-fluid rounded mb-3"
+          />
+          <p>
+            Managed and grew my personal blog
+            (<a
+              href="https://wordsofartbyzyulear.blogspot.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              >wordsofartbyzyulear.blogspot.com</a
+            >) with regular posts focused on digital business, art, and design.
+            Developed content schedules and SEO strategies.
+          </p>
+        </div>
+        <div class="modal-footer border-0">
+          <a
+            href="https://wordsofartbyzyulear.blogspot.com"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Visit Blog</a
+          >
+          <button
+            type="button"
+            class="btn btn-outline-light"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2024 Zahra - All Rights Reserved.
+  </footer>
+
+  <!-- Bootstrap 5 JS Bundle CDN (Popper + Bootstrap JS) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Star sparkle background animation using canvas -->
+  <script>
+    (() => {
+      const canvas = document.getElementById("star-canvas");
+      const ctx = canvas.getContext("2d");
+      let width, height;
+      let stars = [];
+      const STAR_COUNT = 150;
+      const STAR_SIZE = 1.1;
+      const VELOCITY_RANGE = 0.3;
+      const OPACITY_MIN = 0.3;
+      const OPACITY_MAX = 0.95;
+
+      class Star {
+        constructor(x, y, size, vx, vy, opacity, opacityDirection) {
+          this.x = x;
+          this.y = y;
+          this.size = size;
+          this.vx = vx;
+          this.vy = vy;
+          this.opacity = opacity;
+          this.opacityDirection = opacityDirection; // 1 or -1 for twinkle
+        }
+
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+
+          // Bounce horizontally
+          if (this.x < 0 || this.x > width) this.vx = -this.vx;
+          // Bounce vertically
+          if (this.y < 0 || this.y > height) this.vy = -this.vy;
+
+          // Twinkle animation
+          this.opacity += this.opacityDirection * 0.008;
+          if (this.opacity >= OPACITY_MAX) {
+            this.opacity = OPACITY_MAX;
+            this.opacityDirection = -1;
+          } else if (this.opacity <= OPACITY_MIN) {
+            this.opacity = OPACITY_MIN;
+            this.opacityDirection = 1;
+          }
+        }
+
+        draw(ctx) {
+          const gradient = ctx.createRadialGradient(
+            this.x,
+            this.y,
+            0,
+            this.x,
+            this.y,
+            this.size * 6
+          );
+          gradient.addColorStop(0, `rgba(255,255,255,${this.opacity})`);
+          gradient.addColorStop(0.4, `rgba(255,255,255,${this.opacity * 0.18})`);
+          gradient.addColorStop(1, "rgba(255,255,255,0)");
+          ctx.fillStyle = gradient;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Center bright point
+          ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size / 3, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * devicePixelRatio;
+        canvas.height = height * devicePixelRatio;
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(devicePixelRatio, devicePixelRatio);
+
+        // reposition stars within new bounds
+        stars.forEach((star) => {
+          star.x = Math.min(star.x, width);
+          star.y = Math.min(star.y, height);
+        });
+      }
+
+      function initStars() {
+        stars = [];
+        for (let i = 0; i < STAR_COUNT; i++) {
+          let x = Math.random() * width;
+          let y = Math.random() * height;
+          let size = STAR_SIZE * (0.8 + Math.random() * 1.5);
+          let vx = (Math.random() - 0.5) * VELOCITY_RANGE;
+          let vy = (Math.random() - 0.5) * VELOCITY_RANGE;
+          let opacity = OPACITY_MIN + Math.random() * (OPACITY_MAX - OPACITY_MIN);
+          let opacityDirection = Math.random() > 0.5 ? 1 : -1;
+          stars.push(new Star(x, y, size, vx, vy, opacity, opacityDirection));
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        stars.forEach((star) => {
+          star.update();
+          star.draw(ctx);
+        });
+        requestAnimationFrame(animate);
+      }
+
+      function init() {
+        resize();
+        initStars();
+        animate();
+      }
+
+      window.addEventListener("resize", resize);
+
+      // Disable animation for reduced motion
+      const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      if (!mediaQuery.matches) {
+        init();
+      }
+    })();
+  </script>
 </body>
 </html>
